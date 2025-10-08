@@ -26,5 +26,17 @@ puts "Inserting timing constraints for mii_phy_if instances"
 # reset synchronization
 set reset_ffs [get_cells -hier -regexp ".*/(rx|tx)_rst_reg_reg\\\[\\d\\\]"]
 
-set_property ASYNC_REG TRUE $reset_ffs
-set_false_path -to [get_pins -of_objects $reset_ffs -filter {IS_PRESET || IS_RESET}]
+if {[llength $reset_ffs] > 0} {
+    puts "Found reset flip-flops: $reset_ffs"
+    set_property ASYNC_REG TRUE $reset_ffs
+
+    set reset_pins [get_pins -of_objects $reset_ffs -filter {IS_PRESET || IS_RESET}]
+    if {[llength $reset_pins] > 0} {
+        puts "Found reset pins: $reset_pins"
+        set_false_path -to $reset_pins
+    } else {
+        puts "No matching reset pins found for false path."
+    }
+} else {
+    puts "No reset flip-flops matched—skipping constraints."
+}
