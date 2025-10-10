@@ -11,5 +11,12 @@ license = {file = "COPYING"}
 dependencies = [
     "tsfpga",
 ]
+
+[tool.setuptools]
+include-package-data = true
+
 [tool.setuptools.packages]
 find = {}
+
+[tool.setuptools.package-data]
+"verilog_ethernet" = ["scoped_constraints/**"]
