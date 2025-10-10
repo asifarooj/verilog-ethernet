@@ -19,4 +19,4 @@ include-package-data = true
 find = {}
 
 [tool.setuptools.package-data]
-"verilog_ethernet" = ["scoped_constraints/**"]
+"verilog_ethernet" = ["**/*"]   # includes symlinked rtl/, tb/, syn/, scoped_constraints/
